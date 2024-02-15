@@ -72,4 +72,31 @@ function reduce(array, callback, initialValue) {
 
 const nums = [4, 1, 3];
 const add = function(a, b) { return a + b; }
-console.log(reduce(nums, add, 0));   //-> 8
+console.log(reduce(nums, add, 0));   //-> 8}
+
+
+// Challenge 7
+function intersection(arrays) {
+
+  return arrays.reduce( (acc, currentValue, index) => {
+    	return acc.filter( (element) => currentValue.includes(element) )
+  })
+}
+
+console.log(intersection([[5, 10, 15], [15, 88, 1, 5, 7], [1, 10, 15, 5, 20]]));
+// should log: [5, 15]
+
+
+// Challenge 8
+function union(arrays) {
+  
+  return arrays.reduce( (acc, currentValue) => {
+    const notIncludedElements = currentValue.filter( (element) => !acc.includes(element) )
+    console.log(`accu: ${acc}, currentValue: ${currentValue}, returns : ${notIncludedElements}`)
+    return acc.concat(notIncludedElements)
+  })
+
+}
+
+console.log(union([[5, 10, 15], [15, 88, 1, 5, 7], [100, 15, 10, 1, 5]]));
+// should log: [5, 10, 15, 88, 1, 7, 100]
