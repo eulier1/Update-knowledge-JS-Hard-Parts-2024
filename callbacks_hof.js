@@ -100,3 +100,148 @@ function union(arrays) {
 
 console.log(union([[5, 10, 15], [15, 88, 1, 5, 7], [100, 15, 10, 1, 5]]));
 // should log: [5, 10, 15, 88, 1, 7, 100]
+
+// Challenge 9
+function objOfMatches(array1, array2, callback) {
+
+  const objOfMatches = new Map()
+  
+  // For equal arrays length BigO(n)
+  for (let i=0; i < array1.length; i++) {
+		const match = callback(array1[i])
+    
+    if(match === array2[i]) {
+      objOfMatches.set(array1[i], array2[i])
+    }
+  }
+  
+  /* For different arrays lenght BigO(n^2)
+  for (let i=0; i < array1.length; i++) {
+  	const match =	callback(array1[i])
+		for (let j=0; j < array2.length; j++) {
+      if (match === array2[j]) {
+        objOfMatches.set(array1[i], array2[j])
+      }
+    }
+  } */
+  
+  return objOfMatches
+}
+// console.log(objOfMatches(['hi', 'howdy', 'bye', 'later', 'hello'], ['HI', 'Howdy', 'BYE', 'LATER', 'hello'], function(str) { return str.toUpperCase(); }));
+// should log: { hi: 'HI', bye: 'BYE', later: 'LATER' }
+
+
+// Challenge 10
+function multiMap(arrVals, arrCallbacks) {
+
+  const multiMap = new Map()
+  
+  arrVals.forEach( (key) => {
+    const value = arrCallbacks.map( callback => callback(key))
+    multiMap.set(key, value)                                   
+  })
+  
+  return multiMap
+}
+
+console.log(multiMap(['catfood', 'glue', 'beer'], [function(str) { return str.toUpperCase(); }, function(str) { return str[0].toUpperCase() + str.slice(1).toLowerCase(); }, function(str) { return str + str; }]));
+// should log: { catfood: ['CATFOOD', 'Catfood', 'catfoodcatfood'], glue: ['GLUE', 'Glue', 'glueglue'], beer: ['BEER', 'Beer', 'beerbeer'] }
+
+
+// Challenge 11
+function objectFilter(obj, callback) {
+	const objectFilter = new Map()
+  
+  const keys = Object.keys(obj)
+  const values = Object.values(obj)
+  
+	keys.forEach( (key, index) => {
+    if(callback(key) === values[index]) {
+     objectFilter.set(key, callback(key) )
+    }
+  })
+  
+  return objectFilter
+  
+}
+
+ const cities = {
+ London: 'LONDON',
+ LA: 'Los Angeles',
+ Paris: 'PARIS',
+ };
+console.log(objectFilter(cities, city => city.toUpperCase())) // Should log { London: 'LONDON', Paris: 'PARIS'}
+
+
+// Challenge 12
+function majority(array, callback) {
+  
+  const majority = array.filter( (element) => callback(element) ).length
+  const minority = array.length - majority
+  
+  if(majority === minority)
+    return false
+  
+  if(majority > minority)
+    return true
+  
+  return false
+  
+}
+
+// /*** Uncomment these to check your work! ***/
+// const isOdd = function(num) { return num % 2 === 1; };
+console.log(majority([1, 2, 3, 4, 5], isOdd)); // should log: true
+console.log(majority([2, 3, 4, 5], isOdd)); // should log: false
+
+
+// Challenge 13
+function prioritize(array, callback) {
+
+  let prioritize = []
+  
+  array.forEach( (element) => {
+    if (callback(element)) {
+      prioritize.unshift(element)
+    } else {
+      prioritize.push(element)
+    }
+  })
+  
+  return prioritize
+  
+}
+
+// /*** Uncomment these to check your work! ***/
+const startsWithS = function(str) { return str[0] === 's' || str[0] === 'S'; };
+console.log(prioritize(['curb', 'rickandmorty', 'seinfeld', 'sunny', 'friends'], startsWithS)); // should log: ['seinfeld', 'sunny', 'curb', 'rickandmorty', 'friends']
+
+
+// Challenge 14
+function countBy(array, callback) {
+
+  const countBy = new Map()
+  
+  array.forEach( (element) => {
+    let key = callback(element)
+    if ( countBy.has(key) ){
+     countBy.set(key, countBy.get(key) + 1) 
+    } else {
+      countBy.set(key, 1)
+    }
+  })
+  
+  return countBy
+}
+
+// /*** Uncomment these to check your work! ***/
+ console.log(countBy([1, 2, 3, 4, 5], function(num) {
+if (num % 2 === 0) return 'even';
+ else return 'odd';
+ })); // should log: { odd: 3, even: 2 }
+
+
+// Challenge 15
+function groupBy(array, callback) {
+
+}
