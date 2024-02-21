@@ -184,7 +184,7 @@ function majority(array, callback) {
 }
 
 // /*** Uncomment these to check your work! ***/
-const isOdd = function(num) { return num % 2 === 1; };
+// const isOdd = function(num) { return num % 2 === 1; };
 console.log(majority([1, 2, 3, 4, 5], isOdd)); // should log: true
 console.log(majority([2, 3, 4, 5], isOdd)); // should log: false
 
@@ -238,4 +238,39 @@ if (num % 2 === 0) return 'even';
 // Challenge 15
 function groupBy(array, callback) {
 
+  const groupBy = new Map()
+  
+  array.forEach( (element) => {
+   const key = callback(element)
+   if ( !groupBy.has(key) ) {
+     groupBy.set(key, [element])
+   } else {
+     groupBy.set(key, [...groupBy.get(key), element])
+   }
+  })
+  
+  return groupBy
+  
 }
+// /*** Uncomment these to check your work! ***/
+ const decimals = [1.3, 2.1, 2.4];
+ const floored = function(num) { return Math.floor(num); };
+ console.log(groupBy(decimals, floored)); // should log: { 1: [1.3], 2: [2.1, 2.4] }
+
+
+// Challenge 16
+function goodKeys(obj, callback) {
+  
+  const goodKeys = new Array()
+  
+ for (const [key, value] of Object.entries(obj)) {
+   if (callback(value)) goodKeys.push(key)
+ }
+
+  return goodKeys
+}
+
+// /*** Uncomment these to check your work! ***/
+const sunny = { mac: 'priest', dennis: 'calculating', charlie: 'birdlaw', dee: 'bird', frank: 'warthog' };
+const startsWithBird = function(str) { return str.slice(0, 4).toLowerCase() === 'bird'; };
+console.log(goodKeys(sunny, startsWithBird)); // should log: ['charlie', 'dee']
