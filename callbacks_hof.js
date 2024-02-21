@@ -179,18 +179,12 @@ function majority(array, callback) {
   const majority = array.filter( (element) => callback(element) ).length
   const minority = array.length - majority
   
-  if(majority === minority)
-    return false
-  
-  if(majority > minority)
-    return true
-  
-  return false
+  return majority > minority
   
 }
 
 // /*** Uncomment these to check your work! ***/
-// const isOdd = function(num) { return num % 2 === 1; };
+const isOdd = function(num) { return num % 2 === 1; };
 console.log(majority([1, 2, 3, 4, 5], isOdd)); // should log: true
 console.log(majority([2, 3, 4, 5], isOdd)); // should log: false
 
