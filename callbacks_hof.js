@@ -274,3 +274,63 @@ function goodKeys(obj, callback) {
 const sunny = { mac: 'priest', dennis: 'calculating', charlie: 'birdlaw', dee: 'bird', frank: 'warthog' };
 const startsWithBird = function(str) { return str.slice(0, 4).toLowerCase() === 'bird'; };
 console.log(goodKeys(sunny, startsWithBird)); // should log: ['charlie', 'dee']
+
+
+// Challenge 17
+function commutative(func1, func2, value) {
+  
+  return func2(func1(value)) === func1(func2(value))
+
+}
+
+// /*** Uncomment these to check your work! ***/
+ const multBy3 = n => n * 3;
+ const divBy4 = n => n / 4;
+ const subtract5 = n => n - 5;
+ console.log(commutative(multBy3, divBy4, 11)); // should log: true
+ console.log(commutative(multBy3, subtract5, 10)); // should log: false
+ console.log(commutative(divBy4, subtract5, 48)); // should log: false
+
+
+// Challenge 18
+function objFilter(obj, callback) {
+
+  const objFilter = new Map()
+  
+  for (const [key, value] of Object.entries(obj)){
+    if (callback(key) === value) objFilter.set(key, value)
+  }
+  
+  return objFilter
+  
+}
+
+// /*** Uncomment these to check your work! ***/
+ const startingObj = {};
+ startingObj[6] = 3;
+ startingObj[2] = 1;
+ startingObj[12] = 4;
+ const half = n => n / 2;
+ console.log(objFilter(startingObj, half)); // should log: { 2: 1, 6: 3 }
+
+
+// Challenge 19
+function rating(arrOfFuncs, value) {
+
+  let counter = 0
+  
+  arrOfFuncs.forEach( (func) => {
+    if (func(value)) counter++
+  })
+  
+  return (counter/arrOfFuncs.length) * 100
+}
+
+// /*** Uncomment these to check your work! ***/
+ const isEven = n => n % 2 === 0;
+ const greaterThanFour = n => n > 4;
+ const isSquare = n => Math.sqrt(n) % 1 === 0;
+ const hasSix = n => n.toString().includes('6');
+ const checks = [isEven, greaterThanFour, isSquare, hasSix];
+ console.log(rating(checks, 64)); // should log: 100
+ console.log(rating(checks, 66)); // should log: 75
