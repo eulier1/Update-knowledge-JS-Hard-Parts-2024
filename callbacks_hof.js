@@ -334,3 +334,127 @@ function rating(arrOfFuncs, value) {
  const checks = [isEven, greaterThanFour, isSquare, hasSix];
  console.log(rating(checks, 64)); // should log: 100
  console.log(rating(checks, 66)); // should log: 75
+
+
+// Challenge 20
+function pipe(arrOfFuncs, value) {
+  
+  let result = value
+  
+  for ( const func of arrOfFuncs) {
+    result = func(result)
+  }
+  
+  return result
+  
+  // Using reduce function
+  // return arrOfFuncs.reduce( (acc, func) => acc = func(acc), value)
+  
+}
+
+// /*** Uncomment these to check your work! ***/
+ const capitalize = str => str.toUpperCase();
+ const addLowerCase = str => str + str.toLowerCase();
+ const repeat = str => str + str;
+ const capAddlowRepeat = [capitalize, addLowerCase, repeat];
+ console.log(pipe(capAddlowRepeat, 'cat')); // should log: 'CATcatCATcat'
+
+
+// Challenge 21
+function highestFunc(objOfFuncs, subject) {
+  
+  let highestValue = null
+  let highestKey = null 
+  
+  for (const key in objOfFuncs) {
+    const func = objOfFuncs[key]
+    const currentValue = func(subject)
+    if (currentValue > highestValue) {
+      highestKey = key
+      highestValue = currentValue
+    }
+  }
+  
+  return highestKey
+  
+}
+
+// /*** Uncomment these to check your work! ***/
+ const groupOfFuncs = {};
+ groupOfFuncs.double = n => n * 2;
+ groupOfFuncs.addTen = n => n + 10;
+ groupOfFuncs.inverse = n => n * -1;
+ console.log(highestFunc(groupOfFuncs, 5)); // should log: 'addTen'
+ console.log(highestFunc(groupOfFuncs, 11)); // should log: 'double'
+ console.log(highestFunc(groupOfFuncs, -20)); // should log: 'inverse'
+
+ // Real-world use-case
+ // An object whose keys are Shoe's brands and their values are brick and mortar locations
+ // So you wanna know which one of those brick and mortar sells the most per brand.
+
+ // Challenge 22
+function combineOperations(startVal, arrOfFuncs) {
+	return arrOfFuncs.reduce( (acc, currentFunc) => acc = currentFunc(acc) , startVal)
+}
+
+function add100(num) {
+  return num + 100;
+}
+
+function divByFive(num) {
+  return num / 5;
+}
+
+function multiplyByThree(num) {
+  return num * 3;
+}
+
+function multiplyFive(num) {
+  return num * 5;
+}
+
+function addTen(num) {
+  return num + 10;
+}
+
+// /*** Uncomment these to check your work! ***/
+ console.log(combineOperations(0, [add100, divByFive, multiplyByThree])); // Should output 60 -->
+ console.log(combineOperations(0, [divByFive, multiplyFive, addTen]));
+
+ // Challenge 23
+function myFunc(array, callback) {
+  for (let i = 0; i < array.length; i++) {
+    if (callback(array[i])) return 1;
+  }
+  return -1;
+}
+
+const numbers = [2, 3, 6, 64, 10, 8, 12];
+const evens = [2, 4, 6, 8, 10, 12, 64];
+
+function isOdd(num) {
+  return (num % 2 !== 0);
+}
+
+// /*** Uncomment these to check your work! ***/
+// console.log(myFunc(numbers, isOdd)); // Output should be 1
+// console.log(myFunc(evens, isOdd)); // Output should be -1
+
+
+// Challenge 24
+function myForEach(array, callback) {
+  for (let i = 0; i < array.length; i++) {
+    callback(array[i]);
+  }
+}
+
+let sum = 0;
+
+function addToSum(num) {
+  sum += num;
+}
+
+// /*** Uncomment these to check your work! ***/
+// const nums = [1, 2, 3];
+// myForEach(nums, addToSum);
+// console.log(sum); // Should output 6
