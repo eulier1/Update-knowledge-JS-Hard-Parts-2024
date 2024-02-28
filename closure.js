@@ -138,3 +138,87 @@ function delay(func, wait, ...params) {
   setTimeout( () => { func(...params) }, wait)
 
 }
+
+// CHALLENGE 7
+function rollCall(names) {
+  
+  let currentIndex = 0
+  
+  function call() {
+    if (currentIndex < names.length) {
+      const currentElement = names[currentIndex]
+      console.log(currentElement)
+      currentIndex++
+      return currentElement
+    } else {
+			console.log('Everyone accounted for')
+      return null
+    }
+  }
+
+  return call
+}
+
+// /*** Uncomment these to check your work! ***/
+const rollCaller = rollCall(['Victoria', 'Juan', 'Ruth'])
+rollCaller() // => should log 'Victoria'
+rollCaller() // => should log 'Juan'
+rollCaller() // => should log 'Ruth'
+rollCaller() // => should log 'Everyone accounted for'
+
+
+
+// CHALLENGE 8
+function saveOutput(func, magicWord) {
+  
+  let memoize = new Map()
+  
+  function saveFn(input) {
+    if (input ===  magicWord) {
+      return memoize
+    } else {
+      memoize.set(input, func(input))
+      return memoize
+    }
+  }
+  
+  return saveFn
+}
+
+// /*** Uncomment these to check your work! ***/
+const multiplyBy2 = function(num) { return num * 2; };
+const multBy2AndLog = saveOutput(multiplyBy2, 'boo');
+console.log(multBy2AndLog(2)); // => should log 4
+console.log(multBy2AndLog(9)); // => should log 18
+console.log(multBy2AndLog('boo')); // => should log { 2: 4, 9: 18 }
+
+
+// CHALLENGE 9
+function cycleIterator(array) {
+
+  let currentIndex = 0
+  
+  function iterator() {
+    if (currentIndex < array.length){ 
+    	const element = array[currentIndex]
+    	currentIndex++
+    	return element
+    } else {
+      currentIndex = 0
+      const element = array[currentIndex]
+      currentIndex++
+      return element
+    }
+  }
+  
+  return iterator
+  
+}
+
+// /*** Uncomment these to check your work! ***/
+const threeDayWeekend = ['Fri', 'Sat', 'Sun'];
+const getDay = cycleIterator(threeDayWeekend);
+console.log(getDay()); // => should log 'Fri'
+console.log(getDay()); // => should log 'Sat'
+console.log(getDay()); // => should log 'Sun'
+console.log(getDay()); // => should log 'Fri'
