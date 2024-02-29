@@ -115,7 +115,7 @@ function callAfter() {
   counter++
   if ( counter >= count ) {
     // Avoiding a memory leak
-    counter = count
+    counter = undefined
     func()
   }
 }
@@ -151,11 +151,17 @@ function rollCall(names) {
       currentIndex++
       return currentElement
     } else {
+      /* 
+      Prevent memory leaks, by making this variable
+      eligible to be deallocated by the garbage collector(GC)
+      in others the GC is the responsible for doing that,
+      you just tell notify it
+			*/
+      currentIndex = undefined
 			console.log('Everyone accounted for')
-      return null
+      return undefined
     }
   }
-
   return call
 }
 
@@ -210,7 +216,7 @@ function cycleIterator(array) {
       return element
     }
   }
-  
+
   return iterator
   
 }
