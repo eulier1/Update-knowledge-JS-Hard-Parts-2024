@@ -228,3 +228,92 @@ console.log(getDay()); // => should log 'Fri'
 console.log(getDay()); // => should log 'Sat'
 console.log(getDay()); // => should log 'Sun'
 console.log(getDay()); // => should log 'Fri'
+
+
+
+// CHALLENGE 10
+function defineFirstArg(func, arg) {
+
+  return function (...params) {
+    return func(arg, ...params)
+  }
+  
+}
+
+// /*** Uncomment these to check your work! ***/
+const subtract = function(big, small) { return big - small; };
+const subFrom20 = defineFirstArg(subtract, 20);
+console.log(subFrom20(5)); // => should log 15
+
+
+// CHALLENGE 11
+function dateStamp(func) {
+  
+  let log = {}
+  
+  return function(...params) {
+     log.date = new Date().toDateString()
+     log.output = func(...params)
+    return log
+  }
+}
+
+// /*** Uncomment these to check your work! ***/
+const stampedMultBy2 = dateStamp(n => n * 2);
+console.log(stampedMultBy2(4)); // => should log { date: (today's date), output: 8 }
+console.log(stampedMultBy2(6)); // => should log { date: (today's date), output: 12 }
+
+
+// CHALLENGE 12
+function censor() {
+
+  let censorLog = []
+  
+  return function (...arg) {
+    if (arg.length === 2) {
+      censorLog.push({ word: arg[0], replace: arg[1] })
+    }
+    if (arg.length === 1) {
+      const wordToCensor = arg[0]
+      // Here we're creating a new state
+      const censorWord = censorLog.reduce(  
+						(acc, censor) => acc = acc.replace(censor.word, censor.replace)
+        , wordToCensor)
+      return censorWord
+    }
+  } 
+  
+}
+
+// /*** Uncomment these to check your work! ***/
+const changeScene = censor();
+changeScene('dogs', 'cats');
+changeScene('quick', 'slow');
+console.log(changeScene('The quick, brown fox jumps over the lazy dogs.')); // => should log 'The slow, brown fox jumps over the lazy cats.'
+
+
+// CHALLENGE 13
+function createSecretHolder(secret) {
+
+  function getSecret() {
+    console.log(secret)
+    return secret
+  }
+  
+  function setSecret(input) {
+    secret = input
+  }
+  
+  return { getSecret, setSecret }
+  
+}
+
+// /*** Uncomment these to check your work! ***/
+let obj = createSecretHolder(5)
+ obj.getSecret() // => returns 5
+ obj.setSecret(2)
+ obj.getSecret() // => returns 2
+let obj1 = createSecretHolder(10)
+ obj1.getSecret() // => returns 10
+ obj1.setSecret(7)
+ obj1.getSecret() // => returns 7
