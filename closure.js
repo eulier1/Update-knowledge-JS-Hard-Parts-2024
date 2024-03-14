@@ -313,7 +313,98 @@ let obj = createSecretHolder(5)
  obj.getSecret() // => returns 5
  obj.setSecret(2)
  obj.getSecret() // => returns 2
-let obj1 = createSecretHolder(10)
- obj1.getSecret() // => returns 10
- obj1.setSecret(7)
- obj1.getSecret() // => returns 7
+
+
+// CHALLENGE 14
+function callTimes() {
+  let times = 0
+  
+  return () => { ++times; console.log(times)}
+
+}
+
+// /*** Uncomment these to check your work! ***/
+let myNewFunc1 = callTimes();
+let myNewFunc2 = callTimes();
+myNewFunc1(); // => 1
+myNewFunc1(); // => 2
+myNewFunc2(); // => 1
+myNewFunc2(); // => 2
+
+
+// CHALLENGE 15
+function roulette(num) {
+	let n = num;
+  function spin(){
+    if(n > 1) {
+      n--;
+      return "spin";
+    } else if (n == 1) {
+      n--;
+      return "win";
+    } else {
+      return "pick a number to play again";
+    }
+  }
+  
+  return spin
+}
+
+// /*** Uncomment these to check your work! ***/
+const play = roulette(3);
+console.log(play()); // => should log 'spin'
+console.log(play()); // => should log 'spin'
+console.log(play()); // => should log 'win'
+console.log(play()); // => should log 'pick a number to play again'
+console.log(play()); // => should log 'pick a number to play again'
+
+
+// CHALLENGE 16
+function average() {
+  
+  let averages = []
+  
+  return function(num) {
+
+    if(!num) {
+      return averages.reduce( (acc, currentValue) => acc += currentValue , 0) / averages.length
+    } else {
+      averages.push(num)
+      return averages.reduce( (acc, currentValue) => acc += currentValue , 0) / averages.length
+    }
+  }
+
+}
+
+// /*** Uncomment these to check your work! ***/
+const avgSoFar = average();
+console.log(avgSoFar()); // => should log 0
+console.log(avgSoFar(4)); // => should log 4
+console.log(avgSoFar(8)); // => should log 6
+console.log(avgSoFar()); // => should log 6
+console.log(avgSoFar(12)); // => should log 8
+console.log(avgSoFar()); // => should log 8
+
+
+// CHALLENGE 17
+function makeFuncTester(arrOfTests) {
+  
+  
+  return function(callback) {
+    
+    return arrOfTests.every( (element, index) => callback(element[0]) === element[1])
+    
+  }
+  
+}
+
+// /*** Uncomment these to check your work! ***/
+const capLastTestCases = [];
+capLastTestCases.push(['hello', 'hellO']);
+capLastTestCases.push(['goodbye', 'goodbyE']);
+capLastTestCases.push(['howdy', 'howdY']);
+const shouldCapitalizeLast = makeFuncTester(capLastTestCases);
+const capLastAttempt1 = str => str.toUpperCase();
+const capLastAttempt2 = str => str.slice(0, -1) + str.slice(-1).toUpperCase();
+console.log(shouldCapitalizeLast(capLastAttempt1)); // => should log false
+console.log(shouldCapitalizeLast(capLastAttempt2)); // => should log true
