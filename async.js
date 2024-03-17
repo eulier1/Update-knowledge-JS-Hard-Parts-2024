@@ -76,19 +76,97 @@ function sayHowdy() {
   
   function delayCounter(target, wait) {
   
-    let counter = 0
+    let counter = 1
     
     return function() {
-          const intervalFn = setInterval( () => { ++counter ; console.log(counter) } , wait)
-      // This is an indication that you don't have control of the code, we need to do something about
-        setTimeout( () => clearInterval(intervalFn), target * 1000 + 100 )
+          const intervalFn = setInterval( 
+             () => { 
+               if (counter <= target) {
+                console.log(counter) 
+                ++counter
+               } else {
+                   
+              }	
+              } , wait)
     }
   }
   
   // UNCOMMENT THESE TO TEST YOUR WORK!
-  const countLogger = delayCounter(3, 1000)
-  countLogger();
+  const countLogger = delayCounter(10, 1000)
+  // countLogger();
   // After 1 second, log 1
   // After 2 seconds, log 2
   // After 3 seconds, log 3
+  
+  /* CHALLENGE 8 */
+  
+  function promised (val) {
+    let promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+          resolve(val)
+      }, 2000)
+    })
+        
+    return promise;
+  }
+  
+  // UNCOMMENT THESE TO TEST YOUR WORK!
+  // const createPromise = promised('wait for it...');
+  // createPromise.then((val) => console.log(val)); 
+  // will log "wait for it..." to the console after 2 seconds
+  
+  /* CHALLENGE 9 */
+  
+  class SecondClock {
+    constructor(cb) {
+      // ADD CODE HERE
+      this.cb = cb
+      this.second = 0
+    }
+    // ADD METHODS HER
+    start() {
+        this.interval = setInterval( () => { 
+          ++this.second 
+          console.log(this.second % 60)
+      }, 1000)
+    }
+    
+    reset() {
+      clearInterval(this.interval)
+      this.second = 0
+    }
+    
+  }
+  
+  // UNCOMMENT THESE TO TEST YOUR WORK!
+  const clock = new SecondClock((val) => { console.log(val) });
+  // console.log("Started Clock.");
+  // clock.start();
+  // setTimeout(() => {
+  //     clock.reset();
+  //     console.log("Stopped Clock after 6 seconds.");
+  // }, 6000);
+  
+  /* CHALLENGE 10 */
+  
+  function debounce(callback, interval) {
+    let duration = 0
+    let id
+    return function(){
+      if(duration <= 0) {
+        duration = interval
+        clearInterval(id)
+          id = setInterval(() => {duration -= 100}, 100)
+        return callback()
+      }
+    }
+  }
+  // UNCOMMENT THESE TO TEST YOUR WORK!
+   function giveHi() { return 'hi'; }
+   const giveHiSometimes = debounce(giveHi, 3000);
+   console.log(giveHiSometimes()); // -> 'hi'
+  setTimeout(function() { console.log(giveHiSometimes()); }, 2000); // -> undefined
+  setTimeout(function() { console.log(giveHiSometimes()); }, 4000); // -> undefined
+  setTimeout(function() { console.log(giveHiSometimes()); }, 8000); // -> 'hi'
+  
   
